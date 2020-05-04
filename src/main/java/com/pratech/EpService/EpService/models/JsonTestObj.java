@@ -1,12 +1,10 @@
 package com.pratech.EpService.EpService.models;
 
+import com.pratech.EpService.EpService.service.JsonObjectConvertor;
 import org.hibernate.annotations.Type;
 import org.json.simple.JSONObject;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class JsonTestObj {
@@ -14,12 +12,14 @@ public class JsonTestObj {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String jsonData;
+//    @Column(columnDefinition = "TEXT")
+    @Convert(converter = JsonObjectConvertor.class)
+    private JSONObject jsonData;
 
     public JsonTestObj() {
     }
 
-    public JsonTestObj(String jsonData) {
+    public JsonTestObj(JSONObject jsonData) {
         this.jsonData = jsonData;
     }
 
@@ -31,11 +31,11 @@ public class JsonTestObj {
         this.id = id;
     }
 
-    public String getJsonData() {
+    public JSONObject getJsonData() {
         return jsonData;
     }
 
-    public void setJsonData(String jsonData) {
+    public void setJsonData(JSONObject jsonData) {
         this.jsonData = jsonData;
     }
 }
